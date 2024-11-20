@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    labels:
+      nginx.reverse_proxy: "{{upstreams}}"
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - SIGNUPS_ALLOWED=true
+      - INVITATIONS_ALLOWED=false
+      - ADMIN_TOKEN=$$TOKEN
+      - DOMAIN=https://<IP or Hostname>
+    volumes:
+      - /mnt/VaultWarden:/data
+    networks:
+      - vaultwarden_network
+    depends_on:
+      - nginx
+  nginx:
+    image: nginx
+    container_name: reverse_proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /mnt/VaultWarden/nginx.conf:/etc/nginx/nginx.conf
+      - /mnt/VaultWarden/ssl:/etc/nginx/certs
+    networks:
+      - vaultwarden_network
+networks:
+  vaultwarden_network:
+    external: true
