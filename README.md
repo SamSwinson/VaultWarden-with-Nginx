@@ -1,6 +1,9 @@
 # VaultWarden-with-Nginx
 This repository is the required docker-compose and configuration files to self host Vault Warden with Nginx acting as a reverse proxy.
 
+## Blog Post
+If you want a more detailed walk through of this then head over to my blog post about it. [Self Hosted Password Manager Using Docker](https://knowledgeaddict.co.uk/2024/11/20/self-hosted-password-manager-using-docker/)
+
 ## Notes
 In my case I want to make the Vault Warden database accessible on my host system along with my Nginx configuration file and certificate. You can just as easily set up a persistent volume for the containers rather than creating mount points to the host system.
 
